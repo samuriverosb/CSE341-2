@@ -7,15 +7,6 @@ const doc = {
   },
   host: process.env.HOST || 'localhost:3000',
   schemes: ['http'],
-  definitions: {
-    NewContact: {
-      firstName: 'Samuel',
-      lastName:  'Riveros',
-      email:     'test@test.com',
-      favoriteColor: 'Black',
-      birthday:  '1999-05-23'
-    }
-  }
 };
 
 const outputFile = './swagger.json';
