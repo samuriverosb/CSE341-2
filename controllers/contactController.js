@@ -36,9 +36,6 @@ contactController.getContactById = (req, res) => {
 contactController.createContact = (req, res) => {
   const db = mongodb.getDatabase().db('contactsproject');
   const newContact = req.body;
-  console.log('Headers:', req.headers);
-  console.log('Raw body buffer:', req.rawBody);
-  console.log('Creating new contact:', newContact);
   db.collection('contacts').insertOne(newContact).then((result) => {
     console.log(result);
     res.setHeader('Content-Type', 'application/json');
