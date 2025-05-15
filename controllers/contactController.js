@@ -50,7 +50,7 @@ contactController.createContact = (req, res) => {
 contactController.updateContact = (req, res) => {
   const db = mongodb.getDatabase().db('contactsproject');
   const contactId = new ObjectId(req.params.id);
-  const updatedContact = req.body;
+  const {_id, ...updatedContact} = req.body;
   db.collection('contacts').updateOne({ _id: contactId }, { $set: updatedContact }).then((result) => {
     if (result.matchedCount === 0) {
       return res.status(404).send('Contact not found');
