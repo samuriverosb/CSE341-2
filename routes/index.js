@@ -2,6 +2,6 @@ const router = require('express').Router();
 const { root } = require('../controllers/basicController');
 
 router.get('/', root);
-router.use('/contacts', require('./contacts'));
+router.use('/games', require('./games'));
 
 module.exports = router;

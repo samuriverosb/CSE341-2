@@ -1,13 +1,15 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "My API",
-    "description": "Description",
+    "title": "Project 2",
+    "description": "Project 2 API Documentation",
     "version": "1.0.0"
   },
-  "host": "cse341-hg54.onrender.com",
+  "host": "localhost:3000",
   "basePath": "/",
-  "schemes": ["https"],
+  "schemes": [
+    "http"
+  ],
   "paths": {
     "/": {
       "get": {
@@ -19,10 +21,15 @@
         }
       }
     },
-    "/contacts/": {
+    "/games/": {
       "get": {
+        "tags": [
+          "Games"
+        ],
         "description": "",
-        "produces": ["application/json"],
+        "produces": [
+          "application/json"
+        ],
         "responses": {
           "200": {
             "description": "OK"
@@ -33,37 +40,30 @@
         }
       },
       "post": {
+        "tags": [
+          "Games"
+        ],
         "description": "",
+        "produces": [
+          "application/json"
+        ],
         "parameters": [
           {
-            "name": "body",
+            "name": "game",
             "in": "body",
+            "description": "New game data",
+            "required": true,
             "schema": {
-              "type": "object",
-              "properties": {
-                "firstName": {
-                  "example": "any"
-                },
-                "lastName": {
-                  "example": "any"
-                },
-                "email": {
-                  "example": "any"
-                },
-                "favoriteColor": {
-                  "example": "any"
-                },
-                "birthday": {
-                  "example": "YYYY-MM-DD"
-                }
-              }
+              "$ref": "#/definitions/Game"
             }
           }
         ],
-        "produces": ["application/json"],
         "responses": {
           "201": {
             "description": "Created"
+          },
+          "422": {
+            "description": "Unprocessable Entity"
           },
           "500": {
             "description": "Internal Server Error"
@@ -71,10 +71,15 @@
         }
       }
     },
-    "/contacts/{id}": {
+    "/games/{id}": {
       "get": {
+        "tags": [
+          "Games"
+        ],
         "description": "",
-        "produces": ["application/json"],
+        "produces": [
+          "application/json"
+        ],
         "parameters": [
           {
             "name": "id",
@@ -96,38 +101,60 @@
         }
       },
       "put": {
+        "tags": [
+          "Games"
+        ],
         "description": "",
-        "produces": ["application/json"],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "MongoDB ObjectId of the game"
+          },
+          {
+            "name": "game",
+            "in": "body",
+            "description": "Fields to update",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Game"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "422": {
+            "description": "Unprocessable Entity"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Games"
+        ],
+        "description": "",
+        "produces": [
+          "application/json"
+        ],
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
             "type": "string"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "firstName": {
-                  "example": "any"
-                },
-                "lastName": {
-                  "example": "any"
-                },
-                "email": {
-                  "example": "any"
-                },
-                "favoriteColor": {
-                  "example": "any"
-                },
-                "birthday": {
-                  "example": "YYYY-MM-DD"
-                }
-              }
-            }
           }
         ],
         "responses": {
@@ -141,27 +168,48 @@
             "description": "Internal Server Error"
           }
         }
-      },
-      "delete": {
-        "description": "",
-        "produces": ["application/json"],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
+      }
+    }
+  },
+  "definitions": {
+    "Game": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "Halo 3"
+        },
+        "release_date": {
+          "type": "string",
+          "example": "2007-09-25"
+        },
+        "genre": {
+          "type": "array",
+          "example": [
+            "Action",
+            "Single-Player",
+            "FPS"
+          ],
+          "items": {
             "type": "string"
           }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "404": {
-            "description": "Not Found"
-          },
-          "500": {
-            "description": "Internal Server Error"
+        },
+        "company": {
+          "type": "string",
+          "example": "Bungie"
+        },
+        "total_sales": {
+          "type": "number",
+          "example": 4200000
+        },
+        "platform": {
+          "type": "array",
+          "example": [
+            "PC",
+            "Xbox 360"
+          ],
+          "items": {
+            "type": "string"
           }
         }
       }
