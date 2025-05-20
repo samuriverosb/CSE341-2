@@ -5,10 +5,10 @@
     "description": "Project 2 API Documentation",
     "version": "1.0.0"
   },
-  "host": "localhost:3000",
+  "host": "cse341-hg54.onrender.com",
   "basePath": "/",
   "schemes": [
-    "http"
+    "https"
   ],
   "paths": {
     "/": {
@@ -23,9 +23,6 @@
     },
     "/games/": {
       "get": {
-        "tags": [
-          "Games"
-        ],
         "description": "",
         "produces": [
           "application/json"
@@ -40,23 +37,9 @@
         }
       },
       "post": {
-        "tags": [
-          "Games"
-        ],
         "description": "",
         "produces": [
           "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "game",
-            "in": "body",
-            "description": "New game data",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/Game"
-            }
-          }
         ],
         "responses": {
           "201": {
@@ -73,9 +56,6 @@
     },
     "/games/{id}": {
       "get": {
-        "tags": [
-          "Games"
-        ],
         "description": "",
         "produces": [
           "application/json"
@@ -101,9 +81,6 @@
         }
       },
       "put": {
-        "tags": [
-          "Games"
-        ],
         "description": "",
         "produces": [
           "application/json"
@@ -113,16 +90,21 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "type": "string",
-            "description": "MongoDB ObjectId of the game"
+            "type": "string"
           },
           {
-            "name": "game",
+            "name": "body",
             "in": "body",
-            "description": "Fields to update",
-            "required": true,
             "schema": {
-              "$ref": "#/definitions/Game"
+              "type": "object",
+              "properties": {
+                "_id": {
+                  "example": "any"
+                },
+                "updatedGame": {
+                  "example": "any"
+                }
+              }
             }
           }
         ],
@@ -142,9 +124,6 @@
         }
       },
       "delete": {
-        "tags": [
-          "Games"
-        ],
         "description": "",
         "produces": [
           "application/json"
