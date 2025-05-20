@@ -15,6 +15,15 @@ const doc = {
       company: 'Bungie',
       total_sales: 4200000,
       platform: ['PC', 'Xbox 360']
+    },
+    User: {
+      username: 'john_doe',
+      password: 'password123',
+      email: 'test@test.com',
+      first_name: 'John',
+      last_name: 'Doe',
+      date_of_birth: '1990-01-01',
+      favourite_games: ['Halo 3', 'Gears of War']
     }
   }
 };
