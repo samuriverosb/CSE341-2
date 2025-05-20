@@ -23,6 +23,9 @@
     },
     "/games/": {
       "get": {
+        "tags": [
+          "Games"
+        ],
         "description": "",
         "produces": [
           "application/json"
@@ -37,9 +40,23 @@
         }
       },
       "post": {
+        "tags": [
+          "Games"
+        ],
         "description": "",
         "produces": [
           "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "game",
+            "in": "body",
+            "description": "New game data",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Game"
+            }
+          }
         ],
         "responses": {
           "201": {
@@ -56,6 +73,9 @@
     },
     "/games/{id}": {
       "get": {
+        "tags": [
+          "Games"
+        ],
         "description": "",
         "produces": [
           "application/json"
@@ -81,6 +101,9 @@
         }
       },
       "put": {
+        "tags": [
+          "Games"
+        ],
         "description": "",
         "produces": [
           "application/json"
@@ -90,21 +113,16 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "description": "MongoDB ObjectId of the game"
           },
           {
-            "name": "body",
+            "name": "game",
             "in": "body",
+            "description": "Fields to update",
+            "required": true,
             "schema": {
-              "type": "object",
-              "properties": {
-                "_id": {
-                  "example": "any"
-                },
-                "updatedGame": {
-                  "example": "any"
-                }
-              }
+              "$ref": "#/definitions/Game"
             }
           }
         ],
@@ -124,6 +142,9 @@
         }
       },
       "delete": {
+        "tags": [
+          "Games"
+        ],
         "description": "",
         "produces": [
           "application/json"
