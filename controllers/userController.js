@@ -1,5 +1,6 @@
 const mongodb = require('../database');
 const { ObjectId } = require('mongodb');
+const bcrypt = require('bcryptjs');
 
 let userController = {};
 
@@ -33,18 +34,24 @@ userController.getUserById = (req, res) => {
   })
 }
 
-userController.createUser = (req, res) => {
-  const db = mongodb.getDatabase().db('project2');
-  const newUser = req.body;
-  db.collection('users').insertOne(newUser).then((result) => {
-    console.log(result);
+userController.createUser = async (req, res) => {
+  try {
+    const db = mongodb.getDatabase().db('project2');
+    const { username, password, email, first_name, last_name, date_of_birth, favourite_games } = req.body;
+    const existing = await db.collection('users').findOne({ username });
+    if (existing) {
+      return res.status(409).json({ message: 'Username already exists' });
+    }
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const user = { username, password: hashedPassword, email, first_name, last_name, date_of_birth, favourite_games };
+    const result = await db.collection('users').insertOne(user);
     res.setHeader('Content-Type', 'application/json');
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.status(201).json({ _id: result.insertedId });
-  }).catch((err) => {
+  } catch (err) {
     console.error('Error creating user:', err);
     res.status(500).send('Internal Server Error');
-  })
+  }
 }
 
 userController.updateUser = (req, res) => {

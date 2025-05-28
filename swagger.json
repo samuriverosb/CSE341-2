@@ -30,9 +30,17 @@
         "produces": [
           "application/json"
         ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
           },
           "500": {
             "description": "Internal Server Error"
@@ -46,6 +54,11 @@
         "description": "",
         "produces": [
           "application/json"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
         ],
         "parameters": [
           {
@@ -61,6 +74,9 @@
         "responses": {
           "201": {
             "description": "Created"
+          },
+          "401": {
+            "description": "Unauthorized"
           },
           "422": {
             "description": "Unprocessable Entity"
@@ -179,9 +195,17 @@
         "produces": [
           "application/json"
         ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
           },
           "500": {
             "description": "Internal Server Error"
@@ -210,6 +234,9 @@
         "responses": {
           "201": {
             "description": "Created"
+          },
+          "409": {
+            "description": "Username already exists"
           },
           "422": {
             "description": "Unprocessable Entity"
@@ -318,6 +345,90 @@
           }
         }
       }
+    },
+    "/users/register": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "description": "Register a new user",
+        "parameters": [
+          {
+            "name": "user",
+            "in": "body",
+            "description": "New user data",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "409": {
+            "description": "Username already exists"
+          },
+          "422": {
+            "description": "Unprocessable Entity"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/users/login": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "description": "Login and receive a JWT token",
+        "parameters": [
+          {
+            "name": "credentials",
+            "in": "body",
+            "description": "User login credentials",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "username": {
+                  "type": "string"
+                },
+                "password": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "JWT token returned"
+          },
+          "401": {
+            "description": "Invalid credentials"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/users/logout": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "description": "Logout (client should delete token)",
+        "responses": {
+          "200": {
+            "description": "Logged out"
+          }
+        }
+      }
     }
   },
   "definitions": {
@@ -401,6 +512,14 @@
           }
         }
       }
+    }
+  },
+  "securityDefinitions": {
+    "BearerAuth": {
+      "type": "apiKey",
+      "name": "Authorization",
+      "in": "header",
+      "description": "JWT Authorization header using the Bearer scheme. Example: 'Authorization: Bearer {token}'"
     }
   }
 }
